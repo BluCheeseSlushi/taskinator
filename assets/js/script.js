@@ -21,6 +21,7 @@ let completeEditTask = function(taskName, taskType, taskId) {
       tasks[i].name = taskName;
       tasks[i].type = taskType;
     }
+    saveTasks();
 };
 
   alert("Task Updated!");
@@ -85,6 +86,7 @@ let createTaskEl = function(taskDataObj) {
 
   taskDataObj.id = taskIdCounter;
   tasks.push(taskDataObj);
+  saveTasks();
 
   // increase counter for the next id
   taskIdCounter++;
@@ -160,6 +162,7 @@ let deleteTask = function(taskId) {
     }
   }
   tasks = UpdatedTaskArr;
+  saveTasks();
 }
 
 let editTask = function(taskId) {
@@ -205,11 +208,16 @@ let taskStatusChangeHandler = function(event) {
       tasks[i].status = statusValue;
     }
   }
-  console.log(tasks);
+  saveTasks();
 };
 
 let saveTasks = function() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+let loadTasks = function() {
+  tasks = localStorage.getItem("tasks", JSON.parse(tasks));
+  console.log(tasks);
 }
 
 formEl.addEventListener("submit", taskFormHandler);
